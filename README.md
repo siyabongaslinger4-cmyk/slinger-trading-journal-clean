@@ -1,0 +1,1 @@
+# Slinger Trading Journal
