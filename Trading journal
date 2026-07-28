@@ -1,0 +1,28 @@
+├── package.json
+├── vite.config.ts
+├── tailwind.config.js
+├── postcss.config.js
+├── index.html
+
+└── src
+    ├── App.tsx
+    ├── main.tsx
+    ├── index.css
+
+    ├── components
+    │   ├── Dashboard.tsx
+    │   ├── Header.tsx
+    │   ├── TradeForm.tsx
+    │   ├── TradeList.tsx
+    │   ├── PerformanceChart.tsx
+    │   ├── Settings.tsx
+    │   └── StatCard.tsx
+
+    ├── hooks
+    │   └── useLocalStorage.ts
+
+    ├── types
+    │   └── trade.ts
+
+    └── utils
+        └── statistics.ts
