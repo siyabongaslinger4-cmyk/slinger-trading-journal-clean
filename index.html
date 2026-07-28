@@ -1,10 +1,16 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+>
+
 <title>Slinger Trading Journal</title>
 
 <style>
+
 :root {
   --bg: #060b14;
   --card: #101b2b;
@@ -20,28 +26,39 @@
   box-sizing: border-box;
 }
 
+html,
 body {
+  width: 100%;
+  height: 100%;
   margin: 0;
+  overflow: hidden;
   background: var(--bg);
   color: var(--text);
   font-family: Arial, sans-serif;
+  touch-action: pan-y;
 }
 
 .pages {
-  display: flex;
-  width: 300%;
+  width: 100%;
   height: 100vh;
-  transition: transform 0.35s;
+  overflow: hidden;
 }
 
 .page {
-  width: 33.333%;
+  display: none;
+  width: 100%;
   height: 100vh;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 16px 14px 90px;
 }
 
+.page.active {
+  display: block;
+}
+
 .wrap {
+  width: 100%;
   max-width: 1050px;
   margin: auto;
 }
@@ -74,9 +91,9 @@ h2 {
 }
 
 .stat b {
-  font-size: 21px;
   display: block;
   margin-top: 6px;
+  font-size: 21px;
 }
 
 .chart {
@@ -84,6 +101,7 @@ h2 {
 }
 
 canvas {
+  display: block;
   width: 100%;
   height: 390px;
   background: #08111d;
@@ -97,8 +115,9 @@ canvas {
 }
 
 label {
-  font-size: 13px;
+  display: block;
   color: #b9c5d4;
+  font-size: 13px;
 }
 
 input,
@@ -107,15 +126,16 @@ textarea {
   width: 100%;
   margin-top: 5px;
   padding: 12px;
-  background: #08121f;
-  color: white;
   border: 1px solid #344960;
   border-radius: 9px;
+  background: #08121f;
+  color: white;
   font-size: 16px;
 }
 
 textarea {
-  height: 105px;
+  min-height: 105px;
+  resize: vertical;
 }
 
 .full {
@@ -133,16 +153,18 @@ button {
   width: 100%;
   margin-top: 14px;
   background: var(--gold);
+  color: #17120a;
 }
 
 .nav {
   position: fixed;
+  z-index: 100;
   bottom: 12px;
   left: 50%;
-  transform: translateX(-50%);
   display: flex;
   gap: 5px;
   padding: 7px;
+  transform: translateX(-50%);
   background: #101a29;
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -151,6 +173,7 @@ button {
 .nav button {
   background: transparent;
   color: var(--muted);
+  white-space: nowrap;
 }
 
 .nav .on {
@@ -167,11 +190,11 @@ button {
 }
 
 .entry {
+  margin: 9px 0;
+  padding: 13px;
   background: #08121f;
   border: 1px solid var(--line);
-  padding: 13px;
   border-radius: 12px;
-  margin: 9px 0;
 }
 
 .row {
@@ -181,12 +204,13 @@ button {
 }
 
 .delete {
+  margin-top: 8px;
   background: #481a23;
   color: #ffabb4;
-  margin-top: 8px;
 }
 
 @media (max-width: 650px) {
+
   .stats {
     grid-template-columns: 1fr 1fr;
   }
@@ -206,19 +230,37 @@ button {
   canvas {
     height: 270px;
   }
+
+  .nav {
+    width: calc(100% - 24px);
+    justify-content: space-between;
+  }
+
+  .nav button {
+    padding: 11px 8px;
+    font-size: 13px;
+  }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="pages" id="pages">
+<div class="pages">
 
-<section class="page">
+<!-- DASHBOARD -->
+
+<section class="page active">
+
 <div class="wrap">
 
 <h1>Slinger Trading Journal</h1>
-<p class="sub">Performance • Discipline • Growth</p>
+
+<p class="sub">
+Performance • Discipline • Growth
+</p>
 
 <div class="stats">
 
@@ -253,10 +295,10 @@ Cumulative PNL in South African Rand
 </p>
 
 <canvas
-id="chart"
-width="1000"
-height="420">
-</canvas>
+  id="chart"
+  width="1000"
+  height="420"
+></canvas>
 
 </div>
 
@@ -285,8 +327,11 @@ Losses
 </div>
 
 </div>
+
 </section>
 
+
+<!-- ADD TRADE -->
 
 <section class="page">
 
@@ -295,8 +340,7 @@ Losses
 <h1>Add Trade</h1>
 
 <p class="sub">
-Save each instrument separately,
-even on the same date.
+Save each instrument separately, even when traded on the same date.
 </p>
 
 <div class="card">
@@ -308,8 +352,9 @@ even on the same date.
 <label>Trade Date</label>
 
 <input
-id="date"
-type="date">
+  id="date"
+  type="date"
+>
 
 </div>
 
@@ -326,9 +371,7 @@ type="date">
 
 <option>New York</option>
 
-<option>
-London–New York Overlap
-</option>
+<option>London–New York Overlap</option>
 
 </select>
 
@@ -341,9 +384,7 @@ London–New York Overlap
 
 <select id="instrument">
 
-<option>
-Gold (XAUUSD)
-</option>
+<option>Gold (XAUUSD)</option>
 
 <option>US30</option>
 
@@ -360,26 +401,26 @@ Gold (XAUUSD)
 
 <div>
 
-<label>
-Number of Trades
-</label>
+<label>Number of Trades</label>
 
 <input
-id="nt"
-type="number"
-min="1"
-value="1">
+  id="nt"
+  type="number"
+  min="1"
+  value="1"
+>
 
 </div>
 
 
 <div>
 
-<label>
-Position Size
-</label>
+<label>Position Size</label>
 
-<input id="size">
+<input
+  id="size"
+  placeholder="0.10"
+>
 
 </div>
 
@@ -389,17 +430,16 @@ Position Size
 <label>RR</label>
 
 <input
-id="rr"
-placeholder="1:2">
+  id="rr"
+  placeholder="1:2"
+>
 
 </div>
 
 
 <div>
 
-<label>
-PNL Result
-</label>
+<label>PNL Result</label>
 
 <select id="result">
 
@@ -416,23 +456,21 @@ PNL Result
 
 <div>
 
-<label>
-PNL Amount
-</label>
+<label>PNL Amount</label>
 
 <input
-id="amount"
-type="number"
-min="0">
+  id="amount"
+  type="number"
+  min="0"
+  step="0.01"
+>
 
 </div>
 
 
 <div>
 
-<label>
-Risk Adherence
-</label>
+<label>Risk Adherence</label>
 
 <select id="risk">
 
@@ -447,9 +485,7 @@ Risk Adherence
 
 <div>
 
-<label>
-Patient for Setup
-</label>
+<label>Patient for Setup</label>
 
 <select id="patient">
 
@@ -464,9 +500,7 @@ Patient for Setup
 
 <div>
 
-<label>
-Overtrading Flag
-</label>
+<label>Overtrading Flag</label>
 
 <select id="over">
 
@@ -481,9 +515,7 @@ Overtrading Flag
 
 <div>
 
-<label>
-Greed Flag
-</label>
+<label>Greed Flag</label>
 
 <select id="greed">
 
@@ -498,23 +530,22 @@ Greed Flag
 
 <div class="full">
 
-<label>
-Psychology Notes
-</label>
+<label>Psychology Notes</label>
 
-<textarea id="notes">
-</textarea>
+<textarea
+  id="notes"
+  placeholder="How did you feel? Did you follow your plan?"
+></textarea>
 
 </div>
 
 </div>
 
 <button
-class="save"
-onclick="saveTrade()">
-
+  class="save"
+  onclick="saveTrade()"
+>
 Save Trade
-
 </button>
 
 </div>
@@ -524,6 +555,8 @@ Save Trade
 </section>
 
 
+<!-- HISTORY -->
+
 <section class="page">
 
 <div class="wrap">
@@ -531,8 +564,7 @@ Save Trade
 <h1>Trade History</h1>
 
 <p class="sub">
-Your saved trades by date
-and instrument.
+Your saved trades by date and instrument.
 </p>
 
 <div id="history"></div>
@@ -544,28 +576,27 @@ and instrument.
 </div>
 
 
+<!-- NAVIGATION -->
+
 <div class="nav">
 
 <button
-class="on"
-onclick="go(0)">
-
+  class="on"
+  onclick="go(0)"
+>
 Dashboard
-
 </button>
 
 <button
-onclick="go(1)">
-
+  onclick="go(1)"
+>
 Add Trade
-
 </button>
 
 <button
-onclick="go(2)">
-
+  onclick="go(2)"
+>
 History
-
 </button>
 
 </div>
@@ -573,16 +604,23 @@ History
 
 <script>
 
-const $ =
-id =>
+const $ = id =>
 document.getElementById(id);
+
 
 let entries =
 JSON.parse(
+
 localStorage.getItem(
 "slingerV2"
-) || "[]"
+)
+
+||
+
+"[]"
+
 );
+
 
 $("date").value =
 new Date()
@@ -590,26 +628,56 @@ new Date()
 .slice(0, 10);
 
 
-function go(page) {
-
-$("pages").style.transform =
-"translateX(-" +
-(page * 33.333) +
-"%)";
+function go(pageNumber) {
 
 document
-.querySelectorAll(
-".nav button"
-)
+.querySelectorAll(".page")
 .forEach(
+
+(section, index) => {
+
+section.classList.toggle(
+
+"active",
+
+index === pageNumber
+
+);
+
+}
+
+);
+
+
+document
+.querySelectorAll(".nav button")
+.forEach(
+
 (button, index) => {
 
 button.className =
-index === page
-? "on"
-: "";
+
+index === pageNumber
+
+?
+
+"on"
+
+:
+
+"";
 
 }
+
+);
+
+
+window.scrollTo(
+
+0,
+
+0
+
 );
 
 }
@@ -618,9 +686,17 @@ index === page
 function money(value) {
 
 return (
+
 value < 0
-? "-"
-: ""
+
+?
+
+"-"
+
+:
+
+""
+
 )
 
 +
@@ -631,11 +707,17 @@ value < 0
 
 Math.abs(value)
 .toLocaleString(
+
 "en-ZA",
+
 {
+
 minimumFractionDigits: 2,
+
 maximumFractionDigits: 2
+
 }
+
 );
 
 }
@@ -644,23 +726,32 @@ maximumFractionDigits: 2
 function rrValue(value) {
 
 let match =
+
 String(value)
+
 .match(
+
 /(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)/
+
 );
+
 
 return match
 
 ?
 
 Number(match[2])
+
 /
+
 Number(match[1])
 
 :
 
 Number(value)
+
 ||
+
 0;
 
 }
@@ -669,32 +760,47 @@ Number(value)
 function saveTrade() {
 
 let pnl =
+
 Number(
+
 $("amount").value
+
 )
+
 ||
+
 0;
 
 
 if (
+
 $("result").value
+
 ===
+
 "Loss"
+
 ) {
 
 pnl =
+
 -pnl;
 
 }
 
 
 if (
+
 $("result").value
+
 ===
+
 "Break-even"
+
 ) {
 
 pnl =
+
 0;
 
 }
@@ -703,29 +809,63 @@ pnl =
 entries.push({
 
 id:
+
 Date.now(),
 
 date:
+
 $("date").value,
 
 session:
+
 $("session").value,
 
 instrument:
+
 $("instrument").value,
 
 trades:
+
 Number(
+
 $("nt").value
-),
+
+)
+
+||
+
+1,
+
+size:
+
+$("size").value,
 
 pnl:
+
 pnl,
 
 rr:
+
 $("rr").value,
 
+risk:
+
+$("risk").value,
+
+patient:
+
+$("patient").value,
+
+over:
+
+$("over").value,
+
+greed:
+
+$("greed").value,
+
 notes:
+
 $("notes").value
 
 });
@@ -736,7 +876,9 @@ entries.sort(
 (a, b) =>
 
 a.date.localeCompare(
+
 b.date
+
 )
 
 );
@@ -747,16 +889,21 @@ localStorage.setItem(
 "slingerV2",
 
 JSON.stringify(
+
 entries
+
 )
 
 );
 
 
 $("amount").value =
+
 "";
 
+
 $("notes").value =
+
 "";
 
 
@@ -771,6 +918,7 @@ go(2);
 function deleteTrade(id) {
 
 entries =
+
 entries.filter(
 
 entry =>
@@ -785,7 +933,9 @@ localStorage.setItem(
 "slingerV2",
 
 JSON.stringify(
+
 entries
+
 )
 
 );
@@ -805,6 +955,7 @@ entries.reduce(
 (sum, entry) =>
 
 sum +
+
 entry.pnl,
 
 0
@@ -843,18 +994,40 @@ entries
 entry =>
 
 rrValue(
+
 entry.rr
+
 )
 
 )
 
 .filter(
+
 Boolean
+
 );
 
 
 $("total").textContent =
-money(total);
+
+money(
+
+total
+
+);
+
+
+$("total").className =
+
+total < 0
+
+?
+
+"loss"
+
+:
+
+"profit";
 
 
 $("trades").textContent =
@@ -864,6 +1037,7 @@ entries.reduce(
 (sum, entry) =>
 
 sum +
+
 entry.trades,
 
 0
@@ -984,10 +1158,12 @@ entry.pnl
 
 
 $("wins").textContent =
+
 wins.length;
 
 
 $("losses").textContent =
+
 losses.length;
 
 
@@ -1009,11 +1185,25 @@ entry =>
 
 <div class="row">
 
+<div>
+
 <b>
 
 ${entry.instrument}
 
 </b>
+
+<div class="sub">
+
+${entry.date}
+
+•
+
+${entry.session}
+
+</div>
+
+</div>
 
 <b class="${
 entry.pnl < 0
@@ -1031,15 +1221,7 @@ entry.pnl
 
 </div>
 
-<div class="sub">
-
-${entry.date}
-
-•
-
-${entry.session}
-
-•
+<p class="sub">
 
 ${entry.trades}
 trade(s)
@@ -1047,19 +1229,34 @@ trade(s)
 •
 
 RR
-
 ${entry.rr || "-"}
 
-</div>
+•
+
+Risk:
+${entry.risk}
+
+•
+
+Patient:
+${entry.patient}
+
+</p>
 
 ${
 entry.notes
 
 ?
 
-`<p>
+`
+
+<p>
+
 ${entry.notes}
-</p>`
+
+</p>
+
+`
 
 :
 
@@ -1073,7 +1270,9 @@ class="delete"
 
 onclick="deleteTrade(
 ${entry.id}
-)">
+)"
+
+>
 
 Delete
 
@@ -1108,16 +1307,26 @@ drawChart();
 function drawChart() {
 
 let canvas =
+
 $("chart");
 
+
 let context =
-canvas.getContext("2d");
+
+canvas.getContext(
+
+"2d"
+
+);
 
 
 let width =
+
 canvas.width;
 
+
 let height =
+
 canvas.height;
 
 
@@ -1135,10 +1344,12 @@ height
 
 
 let values =
+
 [0];
 
 
-let total =
+let runningTotal =
+
 0;
 
 
@@ -1146,11 +1357,15 @@ entries.forEach(
 
 entry => {
 
-total +=
+runningTotal +=
+
 entry.pnl;
 
+
 values.push(
-total
+
+runningTotal
+
 );
 
 }
@@ -1159,59 +1374,84 @@ total
 
 
 let minimum =
+
 Math.min(
+
 ...values
+
 );
 
 
 let maximum =
+
 Math.max(
+
 ...values
+
 );
 
 
 if (
+
 minimum === maximum
+
 ) {
 
 minimum -=
+
 100;
 
+
 maximum +=
+
 100;
 
 }
 
 
 let left =
+
 95;
 
+
 let right =
+
 25;
+
 
 let top =
+
 25;
 
+
 let bottom =
+
 45;
 
 
 context.font =
+
 "16px Arial";
 
 
 context.strokeStyle =
+
 "#26384f";
 
 
 context.fillStyle =
+
 "#91a0b3";
 
 
 for (
+
 let i = 0;
+
 i < 5;
+
 i++
+
 ) {
 
 let value =
@@ -1223,7 +1463,9 @@ maximum
 (
 
 maximum
+
 -
+
 minimum
 
 )
@@ -1250,9 +1492,13 @@ i
 (
 
 height
+
 -
+
 top
+
 -
+
 bottom
 
 )
@@ -1277,7 +1523,9 @@ y
 context.lineTo(
 
 width
+
 -
+
 right,
 
 y
@@ -1290,7 +1538,11 @@ context.stroke();
 
 context.fillText(
 
-money(value),
+money(
+
+value
+
+),
 
 5,
 
@@ -1302,10 +1554,12 @@ y + 5
 
 
 context.strokeStyle =
+
 "#f3b63f";
 
 
 context.lineWidth =
+
 4;
 
 
@@ -1329,9 +1583,13 @@ index
 (
 
 width
+
 -
+
 left
+
 -
+
 right
 
 )
@@ -1343,7 +1601,9 @@ Math.max(
 1,
 
 values.length
+
 -
+
 1
 
 );
@@ -1358,7 +1618,9 @@ top
 (
 
 maximum
+
 -
+
 value
 
 )
@@ -1368,7 +1630,9 @@ value
 (
 
 maximum
+
 -
+
 minimum
 
 )
@@ -1378,16 +1642,22 @@ minimum
 (
 
 height
+
 -
+
 top
+
 -
+
 bottom
 
 );
 
 
 if (
+
 index
+
 ) {
 
 context.lineTo(
